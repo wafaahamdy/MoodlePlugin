@@ -12,20 +12,39 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>;.
 
 /**
- * Plugin version and other meta-data are defined here.
- *
  * @package     local_greetings
- * @copyright   2023 Wafaa Mansour <wafaa@spot.com>
+ * @copyright   Wafaa Mansour <eng.wafaa.hamdy@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();  // this is added to prevent file from being accessed from outside Moodle
 
-$plugin->component = 'local_greetings';
-$plugin->release = '0.1.0';
-$plugin->version = 2023062900;
-$plugin->requires = 2022112800;
-$plugin->maturity = MATURITY_ALPHA;
+ // Start adding plugin code.
+ require_once('../../config.php');
+ require_once($CFG->dirroot. '/local/greetings/lib.php');
+
+$context = context_system::instance();
+$PAGE->set_context($context);
+$PAGE->set_url(new moodle_url('/local/greetings/index.php'));
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title($SITE->fullname);
+
+$PAGE->set_heading(get_string('pluginname', 'local_greetings'));
+
+/// Echo the page.
+echo $OUTPUT->header();
+
+$now = time();
+echo userdate($now);
+
+
+echo local_greetings_get_greeting($USER);
+
+echo $USER->country ; 
+
+
+
+echo $OUTPUT->footer();
+
